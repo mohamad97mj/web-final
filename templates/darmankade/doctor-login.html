@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ورود</title>
+    <link rel="shortcut icon" type="images/x-icon" href="images/favicon.ico"/>
+    <link rel="stylesheet" href="{% static 'darmankade/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'darmankade/css/login.css' %}">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v[27.0.3]/dist/font-face.css" rel="stylesheet"
+          type="text/css"/>
+
+    <link rel="stylesheet" href="style/font.css">
+    <script src="{% static 'darmankade/js/js.js' %}"></script>
+
+    <style>
+
+    </style>
+</head>
+<body>
+<!-- description commnet -->
+<div id="whole-container">
+    <div id="right-main-container">
+        <div id="logo-container"></div>
+        <h4 id="welcome-header">به درمانکده خوش آمدید</h4>
+        <h5 id="introduction">نوبت دهی آنلاین مطب پزشکان</h5>
+    </div>
+    <div id="left-main-container">
+        <form method="post" action="{% url 'darmankade:doctor_login' %}">
+            {% csrf_token %}
+            <h6>برای ورود نام کاربری و رمز عبور خود را وارد کنید</h6>
+            <input class="form-control" name="username" placeholder="نام کاربری"/>
+            <input class="form-control" name="password" placeholder="رمز عبور"/>
+            <div class="text-center">
+
+                <button type="submit" class="btn btn-success">ورود</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

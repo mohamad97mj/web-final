@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% load widget_tweaks %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ثبت نام</title>
+    <link rel="shortcut icon" type="images/x-icon" href="images/favicon.ico"/>
+    <link rel="stylesheet" href="{% static 'darmankade/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'darmankade/css/login.css' %}">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v[27.0.3]/dist/font-face.css" rel="stylesheet"
+          type="text/css"/>
+
+    <link rel="stylesheet" href="style/font.css">
+    <script src="{% static 'darmankade/js/js.js' %}"></script>
+
+    <style>
+
+    </style>
+</head>
+<body>
+<!-- description commnet -->
+<div id="whole-container">
+    <div id="right-main-container">
+        <div id="logo-container"></div>
+        <h4 id="welcome-header">به درمانکده خوش آمدید</h4>
+        <h5 id="introduction">نوبت دهی آنلاین مطب پزشکان</h5>
+    </div>
+    <div id="left-main-container">
+        <form style="text-align: right; direction: rtl" method="post" action="{% url 'darmankade:patient_register' %}">
+            {% csrf_token %}
+
+            <h6 class="text-center">برای ثبت نام اطلاعات خواسته شده را وارد کنید</h6>
+            <input class="form-control" name="username" placeholder="نام کاربری"/>
+            <input class="form-control" name="mobile" placeholder="شماره همراه"/>
+            <input class="form-control" type="password" name="password" placeholder="رمز عبور"/>
+
+            {% for field in patient_register_form.visible_fields %}
+                <div class="form-group">
+                    {{ field|add_class:'form-control' }}
+                    <span class="help- help-message" id="{{ field.auto_id }}_help_text">{{ field.help_text }}</span>
+                    {% for error in field.errors %}
+                        <span class="help- error-message">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">ثبت نام</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

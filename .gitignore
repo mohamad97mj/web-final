@@ -1,0 +1,4 @@
+/.idea
+/venv
+/darmankade/migrations
+*.pyc

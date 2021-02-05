@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login-as</title>
+</head>
+<body>
+<li class="">
+    <a title="ورود به عنوان بیمار" href="{% url 'darmankade:patient_register' %}">ثبت نام به عنوان بیمار</a>
+</li>
+
+<li class="">
+    <a title="ورود به عنوان پزشک" href="{% url 'darmankade:doctor_register' %}">ثبت نام به عنوان پزشک</a>
+</li>
+</body>
+</html>

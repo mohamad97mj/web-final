@@ -1,0 +1,59 @@
+{% load static %}
+{% load widget_tweaks %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<li class="">
+    <a title="خروج" href="{% url 'darmankade:logout' %}">لیست پزشکان</a>
+    <a title="خروج" href="{% url 'darmankade:logout' %}">خروج</a>
+</li>
+
+{% with id=id %}
+    <form class="myform text-center" style="width: 700px; margin: auto; text-align: right; direction: rtl" method="post"
+          action="{% url 'darmankade:doctor_profile' id %}">
+        {% csrf_token %}
+
+        {% for field in doctor_profile_form.visible_fields %}
+            <div class="form-group">
+                <div>
+                    <label style="direction: rtl; text-align: right"
+                           for="{{ field.id_for_label }}">{{ field.label }}</label>
+                </div>
+                {{ field|add_class:'form-control' }}
+                <span class="help- help-message" id="{{ field.auto_id }}_help_text">{{ field.help_text }}</span>
+                {% for error in field.errors %}
+                    <span class="help- error-message">{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <div style="direction: rtl">
+            <label class="checkbox-inline">
+                <input name="w0" type="checkbox" value="w0" {{ week_days.0 }}>شنبه
+            </label>
+            <label class="checkbox-inline">
+                <input name="w1" type="checkbox" value="w1" {{ week_days.1 }}> یکشننبه
+            </label>
+            <label class="checkbox-inline">
+                <input name="w2" type="checkbox" value="w2" {{ week_days.2 }}>دوشنبه
+            </label>
+            <label class="checkbox-inline">
+                <input name="w3" type="checkbox" value="w3" {{ week_days.3 }}>سه شنبه
+            </label>
+            <label class="checkbox-inline">
+                <input name="w4" type="checkbox" value="w4" {{ week_days.4 }}>چهارشنبه
+            </label>
+            <label class="checkbox-inline">
+                <input name="w5" type="checkbox" value="w5" {{ week_days.5 }}>پنجشنبه
+            </label>
+            <label class="checkbox-inline">
+                <input name="w6" type="checkbox" value="w6" {{ week_days.6 }}>جمعه
+            </label>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">
+                ویرایش
+            </button>
+        </div>
+    </form>
+{% endwith %}
