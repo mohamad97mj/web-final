@@ -12,7 +12,7 @@ function doctors() {
 }
 
 function doctor_instance(id) {
-    window.open('doctors/' + id, '_self');
+    window.open('api/doctors/' + id, '_self');
 }
 
 function specialities() {

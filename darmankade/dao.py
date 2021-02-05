@@ -14,3 +14,10 @@ def load_doctor(pk):
         return Doctor.objects.get(pk=pk)
     except Doctor.DoesNotExist:
         raise Http404
+
+
+def load_doctors():
+    try:
+        return Doctor.objects.all()
+    except Doctor.DoesNotExist:
+        raise Http404

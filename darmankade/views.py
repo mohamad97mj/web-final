@@ -9,7 +9,7 @@ from django.db.models import Q
 from darmankade import forms
 from rest_framework.settings import api_settings
 from darmankade.forms import *
-from .dao import load_doctor, load_patient
+from .dao import load_doctor, load_patient, load_doctors
 from django.contrib.auth import authenticate, login, logout
 
 # import darmankade.views.permissions as mypermissions
@@ -221,9 +221,11 @@ class DoctorProfileView(APIView):
 
 class DoctorsView(APIView):
     def get(self, request):
+        doctors = load_doctors()
         context = {
+            'doctors': doctors
         }
-        return render(request, 'darmankade/doctors.html', context)
+        return render(request, 'darmankade/doctors2.html', context)
 
 
 class DoctorView(APIView):

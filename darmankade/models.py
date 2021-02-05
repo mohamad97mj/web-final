@@ -58,8 +58,24 @@ class Doctor(models.Model):
     online_pay = models.BooleanField()
     experience_years = models.IntegerField()
     address = models.CharField(max_length=1023)
+    avg_score = models.IntegerField()
+    first_empty_date = models.DateField()
     phone = models.CharField(max_length=255)
     week_days = ArrayField(models.BooleanField(blank=True), size=7, )
 
     def __str__(self):
         return self.name + "-" + self.spec
+
+
+class Comment(models.Model):
+    text = models.CharField(max_length=1023)
+    doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
+    patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
+
+
+class Score(models.Model):
+    value = models.IntegerField()
+    doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
+    patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
+
+

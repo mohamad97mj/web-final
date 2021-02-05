@@ -16,7 +16,7 @@ class PatientProfileForm(ModelForm):
 class DoctorProfileForm(ModelForm):
     class Meta:
         model = Doctor
-        exclude = ['username', 'week_days']
+        exclude = ['username', 'week_days', 'avg_score', 'first_empty_date']
         labels = {
             'name': "نام",
             'spec': 'تخصص',
@@ -31,7 +31,7 @@ class DoctorProfileForm(ModelForm):
 class DoctorRegisterForm(ModelForm):
     class Meta:
         model = Doctor
-        exclude = ['username', 'week_days']
+        exclude = ['username', 'week_days', 'avg_score', 'first_empty_date']
         help_texts = {
             'online_pay': 'پرداخت آنلاین'
         }
