@@ -58,8 +58,8 @@ class Doctor(models.Model):
     online_pay = models.BooleanField()
     experience_years = models.IntegerField()
     address = models.CharField(max_length=1023)
-    avg_score = models.IntegerField()
-    first_empty_date = models.DateField()
+    avg_score = models.IntegerField(blank=True, null=True)
+    first_empty_date = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=255)
     week_days = ArrayField(models.BooleanField(blank=True), size=7, )
 
@@ -68,14 +68,15 @@ class Doctor(models.Model):
 
 
 class Comment(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
+    commenter = models.CharField(max_length=1023)
+    reason = models.CharField(max_length=255)
+    score = models.IntegerField()
     text = models.CharField(max_length=1023)
+    # patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
+
+
+class Reserve(models.Model):
+    date = models.DateField()
     doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
     patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
-
-
-class Score(models.Model):
-    value = models.IntegerField()
-    doctor = models.ForeignKey(Doctor, on_delete=models.DO_NOTHING)
-    patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING)
-
-

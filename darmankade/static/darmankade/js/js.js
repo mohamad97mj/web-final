@@ -1,18 +1,18 @@
 function login() {
-    window.open('api/login-as', '_self');
+    window.open('/api/login-as', '_self');
 }
 
 function myregister() {
-    window.open('api/register-as', '_self');
+    window.open('/api/register-as', '_self');
 }
 
 
 function doctors() {
-    window.open('api/doctors', '_self');
+    window.open('/api/doctors', '_self');
 }
 
 function doctor_instance(id) {
-    window.open('api/doctors/' + id, '_self');
+    window.open('/api/doctors/' + id, '_self');
 }
 
 function specialities() {

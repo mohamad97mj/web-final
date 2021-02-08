@@ -1774,7 +1774,7 @@ input:checked + .slider:before {
     justify-content: space-around;
 }
 
-.doctor-profile-container {
+.doctor-detail-container {
     display: flex;
     flex-direction: row;
     width: 70%;
@@ -1783,7 +1783,7 @@ input:checked + .slider:before {
     align-items: center;
 }
 
-.doctor-profile-top-left-text {
+.doctor-detail-top-left-text {
     margin-right: 15px;
     font-size: 12px;
     direction: rtl;

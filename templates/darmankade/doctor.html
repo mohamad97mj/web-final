@@ -3,12 +3,13 @@
 {% load bootstrap4 %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
+{% load my_filters %}
 
 
 <html lang="en" id="bootstrap-overwrite">
 <head>
     <meta charset="UTF-8">
-    <title>نوبت دهی آنلاین مطب آقای دکتر مهران جلالی-متخصص مغز و اعصاب(نورولوژی) درتهران</title>
+    <title>نوبت دهی آنلاین مطب دکتر{{ doctor.name }} -متخصص }}{{ doctor.spec }}</title>
     <link rel="stylesheet" href="{% static 'darmankade/css/doctor.css' %}">
     <link rel="stylesheet" href="{% static 'darmankade/css/general.css' %}">
     <link rel="stylesheet" href="{% static 'darmankade/css/common-style.css' %}">
@@ -28,7 +29,6 @@
 
 </head>
 <body>
-
 <!-- header of the page -->
 <header class="topnav flex-container justify-content-center ">
     <!--    right part of menu -->
@@ -93,22 +93,666 @@
 <!--main content of the page -->
 <main class="light-background">
     <div id="main-container" class="horizontal-center">
-        <p id="navigation-tool" class="text-right rtl-direction">
+        <p class="text-right rtl-direction">
             <a class="text-14">
                 <span class="blue-color">درمانکده ></span>
-                <span class="blue-color">متخصص مغز و اعصاب (نورولوژی) ></span>
-                <span class="gray-color">آقای دکتر مهران جلالی</span>
+                <span class="blue-color"> {{ doctor.spec }} ></span>
+                <span class="gray-color"> دکتر {{ doctor.name }}</span>
             </a>
         </p>
         <div id="main-content" class="flex-container row-reverse-flex padding-top-30 padding-bottom-30">
-            <!--        right content of the main part    -->
-            <div id="main-right-container">
 
+            <!--        right content of the main part    -->
+            <div id="main-right-container" class="">
+                <div id="main-right-content"
+                     class="water-blue-background white-background normal-border rounded-border-10 text-center">
+                    <img class="padding-right-20" id="avatar" src="{% static 'darmankade/icons/doctor/love.svg' %}"
+                         alt=""/>
+                    <img src="{% static 'darmankade/images/doctor/دکتر-مهران-جلالی.jpg' %}" class="circle-imag" alt=""/>
+                    <img class="padding-left-20" src="{% static 'darmankade/icons/doctor/share.svg' %}" alt=""/>
+                    <div class="white-color">
+                        <p class="">
+                            <b>
+                                <span id="name">
+                                {{ doctor.name }}
+                                </span>
+                            </b>
+                        </p>
+                        <p class="text-16">
+                            <span id="spec">
+                            {{ doctor.spec }}
+                            </span>
+                        </p>
+                        <p class="text-14">
+                            شماره نظام پزشکی: <span id="number">{{ doctor.number }}</span>
+                        </p>
+                    </div>
+                    <div class="white-background row horizontal-center rounded-border-10 gray-color"
+                         style="height: 127px; width: 324px;">
+                        <div class="col-4 pl-0 pr-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="m-1 w-100 feather feather-credit-card"
+                                 data-v-543f147a="">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" data-v-543f147a=""></rect>
+                                <line x1="1" y1="10" x2="23" y2="10" data-v-543f147a=""></line>
+                            </svg>
+                            <p class="text-14">
+                                پرداخت آنلاین
+                            </p>
+                            <p class="text-14">
+                                <b>
+                                    <span id="online_pay">
+                                    {% if doctor.online_pay %}
+                                        دارد
+                                    {% else %}
+                                        ندارد
+                                    {% endif %}
+                                    </span>
+                                </b>
+                            </p>
+                        </div>
+                        <div class="col-4 pl-0 pr-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="m-1 w-100 feather feather-clock" data-v-543f147a="">
+                                <circle cx="12" cy="12" r="10" data-v-543f147a=""></circle>
+                                <polyline points="12 6 12 12 16 14" data-v-543f147a=""></polyline>
+                            </svg>
+                            <p class="text-14">
+                                اولین نوبت آزاد
+                            </p>
+                            <p class="text-14">
+                                <b>
+                                    <span id="first_empty_date">
+                                    {{ doctor.first_empty_date }}
+                                    </span>
+                                </b>
+                            </p>
+                        </div>
+                        <div class="col-4 pl-0 pr-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="m-1 w-100 feather feather-book" data-v-543f147a="">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" data-v-543f147a=""></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                                      data-v-543f147a=""></path>
+                            </svg>
+                            <p class="text-14">
+                                تجربه
+                            </p>
+                            <p class="text-14">
+                                <b>
+                                    <span id="experience_years">
+                                        <span>سال</span>
+                                        <span>{{ doctor.experience_years }}</span>
+                                    </span>
+                                </b>
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
+
             <!--   left content of the main part         -->
-            <div id="main-left-container">
+            <div id="main-left-container" class="">
+                <div id="work-time-info" class="white-background mb-3 normal-border rounded-border-10"
+                     style="height: 411px">
+
+                    <div style="height: 91px;"
+                         class="normal-bottom-border center-content text-right rtl-direction pr-4">
+                        <button data-v-e915a394="" type="button" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                class="nav-link rtl-direction dropdown-toggle normal-border rounded-border-5 text-white font-weight-bold water-blue-background rounded-5">
+                            مطب {{ address }}
+                        </button>
+                    </div>
+                    <div style="height: 130px;" class="full-width">
+                        <div class="center-content text-center justify-content-center mt-4">
+
+                            <svg class="icon icon-arrowLeft circle-border" viewBox="0 0 24 24" width="24px"
+                                 height="24px"><title>
+                                Arrow
+                                Left</title>
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path>
+                            </svg>
+                            <div class="week-day">
+                                <p class="pt-0 mb-1">
+                                    <b>
+                                        چهارشنبه
+                                    </b>
+                                </p>
+                                <p class="pt-0 mb-0">
+                                    <b>
+                                        10
+                                    </b>
+                                </p>
+                                دی
+                            </div>
+                            <div class="week-day">
+                                <p class="pt-0 mb-1">
+                                    <b>
+                                        سه شنبه
+                                    </b>
+                                </p>
+                                <p class="pt-0 mb-0">
+                                    <b>
+                                        9
+                                    </b>
+                                </p>
+                                دی
+                            </div>
+                            <div class="week-day">
+                                <p class="pt-0 mb-1">
+                                    <b>
+                                        دو شنبه
+                                    </b>
+                                </p>
+                                <p class="pt-0 mb-0">
+                                    <b>
+                                        8
+                                    </b>
+                                </p>
+                                دی
+                            </div>
+                            <div class="week-day">
+                                <p class="pt-0 mb-1">
+                                    <b>
+                                        یک شنبه
+                                    </b>
+                                </p>
+                                <p class="pt-0 mb-0">
+                                    <b>
+                                        7
+                                    </b>
+                                </p>
+                                دی
+                            </div>
+                            <div class="weekend-day">
+                                <p class="pt-0 mb-1">
+                                    <b>
+                                        شنبه
+                                    </b>
+                                </p>
+                                <p class="pt-0 mb-0">
+                                    <b>
+                                        6
+                                    </b>
+                                </p>
+                                دی
+                            </div>
+                            <div class="weekend-day">
+                                <p class="pt-0 mb-1">
+                                    <b>
+                                        جمعه
+                                    </b>
+                                </p>
+                                <p class="pt-0 mb-0">
+                                    <b>
+                                        5
+                                    </b>
+                                </p>
+                                دی
+                            </div>
+                            <svg style="color: red" class="icon icon-arrowRight circle-border" viewBox="0 0 24 24"
+                                 width="24px"
+                                 height="24px"><title>
+                                Arrow
+                                Right</title>
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+
+                    <div style="height: 148px; padding: 0 10px 0 10px;" class="text-right rtl-direction">
+                        <div style="width: 709px; padding: 20px"
+                             class="gray-color normal-border horizontal-center full-height rounded-border-10">
+                            <svg data-v-969e2d1a="" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 class="text-steel feather feather-clock">
+                                <circle data-v-969e2d1a="" cx="12" cy="12" r="10"></circle>
+                                <polyline data-v-969e2d1a="" points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span class="gray-color text-14">
+                                ساعت های نوبت شنبه 6 دی
+                            </span>
+
+                            <div class="mt-3">
+                                <button style="background-color: #ff6f00; margin-left: 50px"
+                                        class="reserve-btn px-2 py-1 py-md-2 normal-border font-weight-bold rounded-border-5 text-center position-relative">
+                                    <span class="font-weight-bold p-1 text-btn-20 text-white dr-btn reserve-btn-txt1">17:30</span>
+                                    <span class="reserve-btn-txt2 text-14 font-weight-bold text-white btn-message"
+                                          style="display: none;">رزرو کردن</span>
+                                </button>
+                                <button style="background-color: #ff6f00" ;
+                                        class="reserve-btn px-2 py-1 py-md-2 normal-border rounded-border-5 font-weight-bold text-center position-relative">
+                                    <span class="reserve-btn-txt1 font-weight-bold p-1 text-btn-20 text-white dr-btn">19:00</span>
+                                    <span class="reserve-btn-txt2 text-14 font-weight-bold text-white btn-message"
+                                          style="display: none;">رزرو کردن</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!--     patient comment secion           -->
+                {#                <div id="patient-comment"#}
+                {#                     class="white-background mb-3 normal-border center-content rounded-border-10 row"#}
+                {#                     style="height: 151px">#}
+                {#                    <div class="col-10 rtl-direction text-right">#}
+                {#                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"#}
+                {#                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"#}
+                {#                             stroke-linejoin="round" class="feather feather-message-circle" data-v-2cb5db4b="">#}
+                {#                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"#}
+                {#                                  data-v-2cb5db4b=""></path>#}
+                {#                        </svg>#}
+                {#                        <span class="text-12 gray-color font-weight-bold">#}
+                {#                            نظر مجتبی:#}
+                {#                        </span>#}
+                {#                        <p class="text-right text-14 gray-color ">#}
+                {#                            بسیار خوب و با آرامش پذیرای بیمار هستن و حتی برای سوال راجع به بیماری نوعی میپرسن که احتمال#}
+                {#                            ناراحتی رو به بیمار ندن . و خیلی خوشحال هستم که دستگاه نوا#}
+                {##}
+                {#                        </p>#}
+                {##}
+                {#                    </div>#}
+                {#                    <div class="col-2">#}
+                {#                        <div style="width: 71px; height: 109px" class="very-light-blue rounded-border-5 text-center">#}
+                {#                            <p class="text-38 mb-0 blue-color">#}
+                {#                                <b>#}
+                {#                                    <span id="rate">#}
+                {#                                    4.7#}
+                {#                                    </span>#}
+                {#                                </b>#}
+                {#                            </p>#}
+                {#                            <p class="mb-0 blue-color">#}
+                {#                                <b>#}
+                {#                                    <span id="stars">#}
+                {#                                    *****#}
+                {#                                    </span>#}
+                {#                                </b>#}
+                {#                            </p>#}
+                {#                            <p class="mb-0 text-12 gray-color">#}
+                {#                                <span id="comments">#}
+                {#                                از 52 نفر#}
+                {#                                </span>#}
+                {#                            </p>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
+
+                <div id="clinic-info" class="rtl-direction white-background mb-3 normal-border rounded-border-10"
+                     style="height: 247px">
+                    <div style="height: 53px; width: 100%" class="row no-gutters rtl-direction">
+                        <div class="col-3 blue-color">
+                            <div class="clickable">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round"
+                                     class="ml-2 feather feather-map">
+                                    <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                                    <line x1="8" y1="2" x2="8" y2="18"></line>
+                                    <line x1="16" y1="6" x2="16" y2="22"></line>
+                                </svg>
+                                اطلاعات مطب
+                            </div>
+                        </div>
+                        <div class="col-9 light-gray-background text-right pr-2">
+                            <div class="red-on-hover clickable gray-color">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class=" ml-2 feather feather-calendar">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                روز های حضور
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 196px; width: 100%" class="row no-gutters rtl-direction">
+                        <div class="col-5 center-content text-center pr-3">
+                            <img style="width: 250px; height: 123px" class="rounded-border-10"
+                                 src="{% static 'darmankade/images/doctor/map.png' %}" alt="">
+                        </div>
+                        <div class="col-7 text-14 text-right pt-3 mb-0">
+                            <p class="rtl-direction">
+                                <b>
+                                    آدرس مطب 1 :
+                                </b>
+                            </p>
+                            <p>
+                                <span id="address">
+                                    {{ doctor.address }}
+                                </span>
+                            </p>
+                            <p>
+                                <b>تلفن گویا:</b>
+                                <span id="phone">
+                                    {{ doctor.phone }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--      patient comments in detail section          -->
+
+                <div class="patient-comments-detail white-background mb-3 normal-border rounded-border-10"
+                     style="height: 1000px">
+                    <div>
+                        <div style="height: 68px"
+                             class="pr-2 patient-comment-detail-header rtl-direction text-right light-gray-background">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="text-slate feather feather-message-square">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span class="text-16 font-weight-bold">
+                            نظرات کاربران (تعداد کل نظرات :{{ comments|length }})
+                            </span>
+                            <p class="text-12 gray-color pr-3">
+                                در این قسمت شما می توانید تجربه مراجعه کاربران دیگر به مطب آقای دکتر مهران جلالی را
+                                بخوانید.
+                            </p>
+                        </div>
+                        <div style="height: 234px; width: 100%" class="row rtl-direction">
+                            <div class="col-6 text-right">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-star">
+                                    <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+
+                                امتیاز به پزشک
+                                <div class="flex-container row-flex gray-color center-content text-18 pt-1">
+                                    <span>
+                                        5 ستاره
+                                    </span>
+                                    <div style="width: 168px; height: 6px;"
+                                         class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">
+                                        <div style="background-color: #1780df; width: 82%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                        <div style="background-color: #dedada; width: 18%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                    </div>
+                                    <span>
+                                        43
+                                    </span>
+                                </div>
+                                <div class="flex-container row-flex gray-color center-content text-18 pt-1">
+                                    <span>
+                                        4 ستاره
+                                    </span>
+                                    <div style="width: 168px; height: 6px;"
+                                         class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">
+                                        <div style="background-color: #1780df; width: 12%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                        <div style="background-color: #dedada; width: 88%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                    </div>
+                                    <span>
+                                        6
+                                    </span>
+                                </div>
+                                <div class="flex-container row-flex gray-color center-content text-18 pt-1">
+                                    <span>
+                                        3 ستاره
+                                    </span>
+                                    <div style="width: 168px; height: 6px;"
+                                         class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">
+                                        <div style="background-color: #1780df; width: 4%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                        <div style="background-color: #dedada; width: 96%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                    </div>
+                                    <span>
+                                        2
+                                    </span>
+                                </div>
+                                <div class="flex-container row-flex gray-color center-content text-18 pt-1">
+                                    <span>
+                                        2 ستاره
+                                    </span>
+                                    <div style="width: 168px; height: 6px;"
+                                         class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">
+                                        <div style="background-color: #1780df; width: 0%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                        <div style="background-color: #dedada; width: 100%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                    </div>
+                                    <span>
+                                        0
+                                    </span>
+                                </div>
+                                <div class="flex-container row-flex gray-color center-content text-18 pt-1">
+                                    <span>
+                                        1 ستاره
+                                    </span>
+                                    <div style="width: 168px; height: 6px;"
+                                         class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">
+                                        <div style="background-color: #1780df; width: 2%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                        <div style="background-color: #dedada; width: 98%"
+                                             class="rounded-border-5 full-height">
+                                        </div>
+                                    </div>
+                                    <span>
+                                        1
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-6 text-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                     stroke-linecap="round" stroke-linejoin="round" class="feather feather-watch">
+                                    <circle cx="12" cy="12" r="7"></circle>
+                                    <polyline points="12 9 12 12 13.5 13.5"></polyline>
+                                    <path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"></path>
+                                </svg>
+                                <span class="text-14 font-weight-bold">
+                                        میانگین زمان انتظار برای ویزیت
+                                    </span>
+                                <p class="text-14">
+                                    45 دقیقه
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="patient-comment-detail-content">
+                        <div id="sorting-part" style="height: 53px; width: 709px"
+                             class="center-content pr-3 white-background mb-3 normal-border rounded-border-10 horizontal-center rtl-direction text-right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="text-slate feather feather-align-right">
+                                <line x1="21" y1="10" x2="7" y2="10"></line>
+                                <line x1="21" y1="6" x2="3" y2="6"></line>
+                                <line x1="21" y1="14" x2="3" y2="14"></line>
+                                <line x1="21" y1="18" x2="7" y2="18"></line>
+                            </svg>
+                            <span class="text-14">
+                                مرتب سازی بر اساس:
+                            </span>
+                            <span class="text-14 gray-color pr-4">
+                                جدیدترین
+                            </span>
+                            <span class="text-14 gray-color pr-4 pl-4">
+                                بیشترین امتیاز
+                            </span>
+                            <span class="water-blue-background text-14 white-color rounded-border-10"
+                                  style="padding: 5px">
+                                مفید ترین نظرات
+                            </span>
+
+                        </div>
+
+                        <div>
+                            {% for comment in comments %}
+                                <div style="height: 285px; width: 709px"
+                                     class="patient-comment-detail-box white-background mb-3 normal-border rounded-border-10 horizontal-center">
+                                    <div style="height: 70px"
+                                         class="patient-comment-detail-box-header  text-right no-gutters row rtl-direction center-content light-gray-background">
+                                        <div class="col-6 text-right">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round" class="text-slate feather feather-user">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg>
+                                            <span class="text-12 gray-color pr-2">
+                                        نظر {{ comment.commenter }}
+                                    </span>
+                                        </div>
+                                        <div class="col-6 text-14 pl-1 text-left" style="color: #4dcc6b">
+                                            <svg data-v-f144f462="" xmlns="http://www.w3.org/2000/svg" width="1.5em"
+                                                 height="1.5em" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                 class="cursor-pointer mx-auto feather feather-thumbs-up">
+                                                <path
+                                                        data-v-f144f462=""
+                                                        d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                                            </svg>
+                                            <p>
+                                                4
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div style="height: 215px" class="patient-comment-detail-box-content row">
+                                        <div class="col-7 pt-3 gray-color">
+                                            <p class="rtl-direction text-right text-14">
+                                        <span id="comment_text">
+                                            {{ comment.text }}
+                                        </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-5 text-right rtl-direction pr-3 pt-3 text-14 font-weight-bold">
+                                            <div class="padding-top-10">
+                                                <span>
+                                                    علت مراجعه
+                                                </span>
+                                                <span class="pr-5">
+                                                    {{ comment.reason }}
+                                                </span>
+                                            </div>
+                                            <div style="line-height: 48px" class="center-content">
+                                                <span>
+                                                    امتیاز به پزشک
+                                                </span>
+                                                <span class="pr-4 blue-color text-38">
+                                                    {{ comment.score }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div id="new-comments"></div>
+
+
+                        {#                        <div id="patient-comment-detail-box" style="height: 285px; width: 709px"#}
+                        {#                             class="white-background mb-3 normal-border rounded-border-10 horizontal-center">#}
+                        {#                            <div id="patient-comment-detail-box-header " style="height: 70px"#}
+                        {#                                 class="text-right no-gutters row rtl-direction center-content light-gray-background">#}
+                        {#                                <div class="col-6 text-right">#}
+                        {#                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"#}
+                        {#                                         viewBox="0 0 24 24"#}
+                        {#                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"#}
+                        {#                                         stroke-linejoin="round" class="text-slate feather feather-user">#}
+                        {#                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>#}
+                        {#                                        <circle cx="12" cy="7" r="4"></circle>#}
+                        {#                                    </svg>#}
+                        {#                                    <span class="text-12 gray-color pr-2">#}
+                        {#                                    نظر زهرا در تاریخ 11 آبان 1399#}
+                        {#                                </span>#}
+                        {#                                </div>#}
+                        {#                                <div class="col-6 text-14 pl-1 text-left" style="color: #4dcc6b">#}
+                        {#                                    <svg data-v-f144f462="" xmlns="http://www.w3.org/2000/svg" width="1.5em"#}
+                        {#                                         height="1.5em" viewBox="0 0 24 24" fill="none" stroke="currentColor"#}
+                        {#                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"#}
+                        {#                                         class="cursor-pointer mx-auto feather feather-thumbs-up">#}
+                        {#                                        <path#}
+                        {#                                                data-v-f144f462=""#}
+                        {#                                                d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>#}
+                        {#                                    </svg>#}
+                        {#                                    <p>#}
+                        {#                                        0#}
+                        {#                                    </p>#}
+                        {#                                </div>#}
+                        {#                            </div>#}
+
+                    </div>
+
+
+                    <div style="height: 150px; width: 709px" class="text-right">
+
+                        {% csrf_token %}
+
+                        <p>
+                            ثبت نظر جدید
+                        </p>
+                        {#                            <form class="bg-white" style="direction: rtl">#}
+                        <div>
+                            <label for="name">
+                                نام
+                                <input class="form-control" id="commenter" name="commenter"/>
+                            </label>
+                        </div>
+                        <div>
+                            <label for="reason">
+                                علت مراجعه
+                                <input class="form-control" id="reason" name="reason"/>
+                            </label>
+                        </div>
+                        <div>
+                            <label for="score">
+                                امتیاز به پزشک(عدد بین 0 تا 5)
+                                <input class="form-control" id="score" name="score"/>
+                            </label>
+                        </div>
+                        <div>
+                            <label for="text">
+                                متن پیام
+                                <textarea class="form-control" id="text" name="text"></textarea>
+                            </label>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-secondary" onclick="send_comment()">
+                                ثبت
+                            </button>
+                        </div>
+                        {#                            </form>#}
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 </main>
 <footer>
@@ -119,10 +763,10 @@
                     <div class="text-center">
                         <img style="width: 100px; height: 110px; margin-left: 15px; margin-right: 15px"
                              class="white-background rounded-border-20"
-                             src="{% static 'darmankade/images/global/نماد%20الکترونیکی.png' %}">
+                             src="{% static 'darmankade/images/global/نماد الکترونیکی.png' %}">
                         <img style="width: 100px; height: 110px; margin-left: 15px; margin-right: 15px"
                              class="white-background rounded-border-20"
-                             src="{% static 'darmankade/images/global/نشان%20ملی.png' %}">
+                             src="{% static 'darmankade/images/global/نشان ملی.png' %}">
                     </div>
                 </div>
                 <div class="text-center">
@@ -191,702 +835,99 @@
     </div>
 </footer>
 
-
 <script>
-    const create_main_right_content = (name, spec, avatar, number, online_pay, first_empty_date, experience_years) => {
 
-        if (online_pay) {
-            online_pay = 'دارد'
-        } else {
-            online_pay = 'ندارد'
-        }
+    function send_comment() {
+        const commenter = $('#commenter').val()
+        const reason = $('#reason').val();
+        const score = $('#score').val();
+        const text = $('#text').val();
 
-        let html2append = '<div id="main-right-content"\n' +
-            '                     class="water-blue-background white-background normal-border rounded-border-10 text-center">\n' +
-            '                    <img class="padding-right-20" id="avatar" src="{% static 'darmankade/icons/doctor/love.svg' %}" alt=""/>\n' +
-            '                    <img src="' + avatar + '" class="circle-imag" alt=""/>\n' +
-            '                    <img class="padding-left-20" src="{% static 'darmankade/icons/doctor/share.svg' %}" alt=""/>\n' +
-            '                    <div class="white-color">\n' +
-            '                        <p class="">\n' +
-            '                            <b>\n' +
-            '                                <span id="name">\n' +
-            '                                \n' + name +
-            '                                </span>\n' +
-            '                            </b>\n' +
-            '                        </p>\n' +
-            '                        <p class="text-16 rtl-direction">\n' +
-            '                            <span id="spec">\n' +
-            '                            \n' + spec +
-            '                            </span>\n' +
-            '                        </p>\n' +
-            '                        <p class="text-14">\n' +
-            'شماره نظام پزشکی: <span id="number">                            ' + number + '</span>\n' +
-            '                        </p>\n' +
-            '                    </div>\n' +
-            '                    <div class="white-background row horizontal-center rounded-border-10 gray-color"\n' +
-            '                         style="height: 127px; width: 324px;">\n' +
-            '                        <div class="col-4 pl-0 pr-0">\n' +
-            '                            <img src="{% static 'darmankade/icons/doctor/online-payment.svg' %}" >' +
-            '                            <p class="text-14">\n' +
-            'پرداخت آنلاین\n' +
-            '                            </p>\n' +
-            '                            <p class="text-14">\n' +
-            '                                <b>\n' +
-            '                                    <span id="online_pay">\n' + online_pay + '</span>\n' +
-            '                                </b>\n' +
-            '                            </p>\n' +
-            '                        </div>\n' +
-            '                        <div class="col-4 pl-0 pr-0">\n' +
-            '                            <img src="{% static 'darmankade/icons/doctor/first-empty.svg' %}">' +
-            '                            <p class="text-14">\n' +
-            'اولین نوبت آزاد\n' +
-            '                            </p>\n' +
-            '                            <p class="text-14 rtl-direction">\n' +
-            '                                <b>\n' +
-            '                                    <span id="first_empty_date">\n' + first_empty_date + '</span>\n' +
-            '                                </b>\n' +
-            '                            </p>\n' +
-            '                        </div>\n' +
-            '                        <div class="col-4 pl-0 pr-0">\n' +
-            '                            <img src="{% static 'darmankade/icons/doctor/experience.svg' %}">' +
-            '                            <p class="text-14">\n' +
-            'تجربه\n' +
-            '                            </p>\n' +
-            '                            <p class="text-14">\n' +
-            '                                <b>\n' +
-            '                                    <span id="experience_years">\n' + experience_years + '</span>\n' +
-            '                                </b>\n' +
-            '                            </p>\n' +
-            '                        </div>\n' +
-            '\n' +
-            '                    </div>\n' +
-            '\n' +
-            '                </div>'
-
-        addElementBeforeEnd("main-right-container", html2append);
-
-    }
-
-    const create_main_left_content = (stars, rate, commenter, comments, comment_text, address, phone, week_days) => {
-        let i;
-        switch (stars) {
-            case 1:
-                stars = '*'
-                break;
-            case 2:
-                stars = '**'
-                break;
-            case 3:
-                stars = '***'
-                break;
-            case 4:
-                stars = '****'
-                break;
-            case 5:
-                stars = '*****'
-                break;
-        }
-
-        for (i = 0; i < week_days.length; i++) {
-            if (week_days[i] == true) {
-                week_days[i] = "{%  static 'darmankade/icons/doctor/tick.svg' %}";
-            } else {
-                week_days[i] = "{%  static 'darmankade/icons/doctor/cross.svg' %}";
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'darmankade:comment' %}",
+            data: {
+                "commenter": commenter,
+                "reason": reason,
+                "score": score,
+                "text": text,
+                "doctor_username": '{{ doctor.username }}',
+            },
+            success: function (response) {
+                // if not valid user, alert the user
+                let html2insert = '<div style="height: 285px; width: 709px"\n' +
+                    '                                     class="patient-comment-detail-box white-background mb-3 normal-border rounded-border-10 horizontal-center">\n' +
+                    '                                    <div style="height: 70px"\n' +
+                    '                                         class="patient-comment-detail-box-header  text-right no-gutters row rtl-direction center-content light-gray-background">\n' +
+                    '                                        <div class="col-6 text-right">\n' +
+                    '                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"\n' +
+                    '                                                 viewBox="0 0 24 24"\n' +
+                    '                                                 fill="none" stroke="currentColor" stroke-width="2"\n' +
+                    '                                                 stroke-linecap="round"\n' +
+                    '                                                 stroke-linejoin="round" class="text-slate feather feather-user">\n' +
+                    '                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>\n' +
+                    '                                                <circle cx="12" cy="7" r="4"></circle>\n' +
+                    '                                            </svg>\n' +
+                    '                                            <span class="text-12 gray-color pr-2">\n' + commenter +
+                    '                                    </span>\n' +
+                    '                                        </div>\n' +
+                    '                                        <div class="col-6 text-14 pl-1 text-left" style="color: #4dcc6b">\n' +
+                    '                                            <svg data-v-f144f462="" xmlns="http://www.w3.org/2000/svg" width="1.5em"\n' +
+                    '                                                 height="1.5em" viewBox="0 0 24 24" fill="none" stroke="currentColor"\n' +
+                    '                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n' +
+                    '                                                 class="cursor-pointer mx-auto feather feather-thumbs-up">\n' +
+                    '                                                <path\n' +
+                    '                                                        data-v-f144f462=""\n' +
+                    '                                                        d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>\n' +
+                    '                                            </svg>\n' +
+                    '                                            <p>\n' +
+                    '                                                4\n' +
+                    '                                            </p>\n' +
+                    '                                        </div>\n' +
+                    '                                    </div>\n' +
+                    '                                    <div style="height: 215px" class="patient-comment-detail-box-content row">\n' +
+                    '                                        <div class="col-7 pt-3 gray-color">\n' +
+                    '                                            <p class="rtl-direction text-right text-14">\n' +
+                    '                                        <span id="comment_text">\n' + text +
+                    '                                        </span>\n' +
+                    '                                            </p>\n' +
+                    '                                        </div>\n' +
+                    '                                        <div class="col-5 text-right rtl-direction pr-3 pt-3 text-14 font-weight-bold">\n' +
+                    '                                            <div class="padding-top-10">\n' +
+                    '                                                <span>\n' +
+                    '                                                    علت مراجعه\n' +
+                    '                                                </span>\n' +
+                    '                                                <span class="pr-5">\n' + reason +
+                    '                                                </span>\n' +
+                    '                                            </div>\n' +
+                    '                                            <div style="line-height: 48px" class="center-content">\n' +
+                    '                                                <span>\n' +
+                    '                                                    امتیاز به پزشک\n' +
+                    '                                                </span>\n' +
+                    '                                                <span class="pr-4 blue-color text-38">\n' + score +
+                    '                                                </span>\n' +
+                    '                                            </div>\n' +
+                    '                                        </div>\n' +
+                    '                                    </div>\n' +
+                    '\n' +
+                    '                                </div>'
+                let parent = document.getElementById('new-comments');
+                parent.insertAdjacentHTML('beforeend', html2insert);
+            },
+            error: function (response) {
+                console.log(response)
             }
-        }
-
-        let html2append = '                <div>\n' +
-            '                    <div id="work-time-info" class="white-background mb-3 normal-border rounded-border-10"\n' +
-            '                         style="height: 411px">\n' +
-            '\n' +
-            '                        <div style="height: 91px;"\n' +
-            '                             class="normal-bottom-border center-content text-right rtl-direction pr-4">\n' +
-            '                        </div>\n' +
-            '                        <div style="height: 130px;" class="full-width">\n' +
-            '                            <div class="center-content text-center justify-content-center mt-4">\n' +
-            '\n' +
-            '                                <svg class="icon icon-arrowLeft circle-border" viewBox="0 0 24 24" width="24px"\n' +
-            '                                     height="24px"><title>\n' +
-            '                                    Arrow\n' +
-            '                                    Left</title>\n' +
-            '                                    <path d="M0 0h24v24H0z" fill="none"></path>\n' +
-            '                                    <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"></path>\n' +
-            '                                </svg>\n' +
-            '                                <div class="week-day">\n' +
-            '                                    <p class="pt-0 mb-1">\n' +
-            '                                        <b>\n' +
-            '                                            شنبه\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    <p class="pt-0 mb-0">\n' +
-            '                                        <b>\n' +
-            '                                            10\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    دی\n' +
-            '                                </div>\n' +
-            '                                <div class="week-day">\n' +
-            '                                    <p class="pt-0 mb-1">\n' +
-            '                                        <b>\n' +
-            '                                            یکشنبه\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    <p class="pt-0 mb-0">\n' +
-            '                                        <b>\n' +
-            '                                            9\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    دی\n' +
-            '                                </div>\n' +
-            '                                <div class="week-day">\n' +
-            '                                    <p class="pt-0 mb-1">\n' +
-            '                                        <b>\n' +
-            '                                            دو شنبه\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    <p class="pt-0 mb-0">\n' +
-            '                                        <b>\n' +
-            '                                            8\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    دی\n' +
-            '                                </div>\n' +
-            '                                <div class="week-day">\n' +
-            '                                    <p class="pt-0 mb-1">\n' +
-            '                                        <b>\n' +
-            '                                            سه شنبه\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    <p class="pt-0 mb-0">\n' +
-            '                                        <b>\n' +
-            '                                            7\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    دی\n' +
-            '                                </div>\n' +
-            '                                <div class="week-day">\n' +
-            '                                    <p class="pt-0 mb-1">\n' +
-            '                                        <b>\n' +
-            '                                           چهار شنبه\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    <p class="pt-0 mb-0">\n' +
-            '                                        <b>\n' +
-            '                                            6\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    دی\n' +
-            '                                </div>\n' +
-            '                                <div class="weekend-day">\n' +
-            '                                    <p class="pt-0 mb-1">\n' +
-            '                                        <b>\n' +
-            '                                            پنجشنبه\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    <p class="pt-0 mb-0">\n' +
-            '                                        <b>\n' +
-            '                                            5\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    دی\n' +
-            '                                </div>\n' +
-            '                                <div class="weekend-day">\n' +
-            '                                    <p class="pt-0 mb-1">\n' +
-            '                                        <b>\n' +
-            '                                            جمعه\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    <p class="pt-0 mb-0">\n' +
-            '                                        <b>\n' +
-            '                                            8\n' +
-            '                                        </b>\n' +
-            '                                    </p>\n' +
-            '                                    دی\n' +
-            '                                </div>\n' +
-            '                                <svg style="color: red" class="icon icon-arrowRight circle-border" viewBox="0 0 24 24"\n' +
-            '                                     width="24px"\n' +
-            '                                     height="24px"><title>\n' +
-            '                                    Arrow\n' +
-            '                                    Right</title>\n' +
-            '                                    <path d="M0 0h24v24H0z" fill="none"></path>\n' +
-            '                                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"></path>\n' +
-            '                                </svg>\n' +
-            '                            </div>\n' +
-            '                        </div>\n' +
-            '\n' +
-            '\n' +
-            '                        <div style="height: 148px; padding: 0 10px 0 10px;" class="text-right rtl-direction">\n' +
-            '                            <div style="width: 709px; padding: 20px"\n' +
-            '                                 class="gray-color normal-border horizontal-center full-height rounded-border-10">\n' +
-            '                                <svg data-v-969e2d1a="" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em"\n' +
-            '                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"\n' +
-            '                                     stroke-linecap="round" stroke-linejoin="round"\n' +
-            '                                     class="text-steel feather feather-clock">\n' +
-            '                                    <circle data-v-969e2d1a="" cx="12" cy="12" r="10"></circle>\n' +
-            '                                    <polyline data-v-969e2d1a="" points="12 6 12 12 16 14"></polyline>\n' +
-            '                                </svg>\n' +
-            '                                <span class="gray-color text-14">\n' +
-            '                                ساعت های نوبت شنبه 6 دی\n' +
-            '                            </span>\n' +
-            '\n' +
-            '                                <div class="mt-3">\n' +
-            '                                    <button style="background-color: #ff6f00; margin-left: 50px"\n' +
-            '                                            class="reserve-btn px-2 py-1 py-md-2 normal-border font-weight-bold rounded-border-5 text-center position-relative">\n' +
-            '                                        <span class="font-weight-bold p-1 text-btn-20 text-white dr-btn reserve-btn-txt1">17:30</span>\n' +
-            '                                        <span class="reserve-btn-txt2 text-14 font-weight-bold text-white btn-message"\n' +
-            '                                              style="display: none;">رزرو کردن</span>\n' +
-            '                                    </button>\n' +
-            '                                    <button style="background-color: #ff6f00" ;\n' +
-            '                                            class="reserve-btn px-2 py-1 py-md-2 normal-border rounded-border-5 font-weight-bold text-center position-relative">\n' +
-            '                                        <span class="reserve-btn-txt1 font-weight-bold p-1 text-btn-20 text-white dr-btn">19:00</span>\n' +
-            '                                        <span class="reserve-btn-txt2 text-14 font-weight-bold text-white btn-message"\n' +
-            '                                              style="display: none;">رزرو کردن</span>\n' +
-            '                                    </button>\n' +
-            '\n' +
-            '                                </div>\n' +
-            '                            </div>\n' +
-            '                        </div>\n' +
-            '\n' +
-            '                    </div>\n' +
-            '\n' +
-            '\n' +
-            '                    <!--     patient comment secion           -->\n' +
-            '                    <div id="patient-comment"\n' +
-            '                         class="white-background mb-3 normal-border center-content rounded-border-10 row"\n' +
-            '                         style="height: 151px">\n' +
-            '                        <div class="col-10 rtl-direction text-right">\n' +
-            '                        <img src="{% static 'darmankade/icons/doctor/comment.svg' %}">' +
-            '\n' +
-            '                            <span class="text-12 gray-color font-weight-bold">\n' +
-            '                            نظر <span id="commenter">' + commenter + '</span>:\n' +
-            '                        </span>\n' +
-            '                            <p class="text-right text-14 gray-color ">\n' +
-            '                            <span id="comment_text">\n' +
-            '                                \n' + comment_text +
-            '                            </span>\n' +
-            '\n' +
-            '                            </p>\n' +
-            '\n' +
-            '                        </div>\n' +
-            '                        <div class="col-2">\n' +
-            '                            <div style="width: 71px; height: 109px"\n' +
-            '                                 class="very-light-blue rounded-border-5 text-center">\n' +
-            '                                <p class="text-38 mb-0 blue-color">\n' +
-            '                                    <b>\n' +
-            '                                    <span id="rate">\n' +
-            '                                    \n' + rate +
-            '                                    </span>\n' +
-            '                                    </b>\n' +
-            '                                </p>\n' +
-            '                                <p class="mb-0 blue-color">\n' +
-            '                                    <b>\n' +
-            '                                    <span id="stars">\n' + stars +
-            '                                    </span>\n' +
-            '                                    </b>\n' +
-            '                                </p>\n' +
-            '                                <p class="mb-0 text-12 gray-color">\n' +
-            '                                <span id="comments">\n' +
-            '                                از <span>' + comments + '</span> نفر\n' +
-            '                                </span>\n' +
-            '                                </p>\n' +
-            '                            </div>\n' +
-            '                        </div>\n' +
-            '                    </div>\n' +
-            '\n' +
-            '                    <div id="clinic-info" class="rtl-direction white-background mb-3 normal-border rounded-border-10"\n' +
-            '                         style="height: 247px">\n' +
-            '                        <div style="height: 53px; width: 100%" class="row no-gutters rtl-direction">\n' +
-            '                            <div class="col-3 blue-color">\n' +
-            '                                <div class="clickable">\n' +
-            '                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"\n' +
-            '                                         viewBox="0 0 24 24"\n' +
-            '                                         fill="none"\n' +
-            '                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"\n' +
-            '                                         stroke-linejoin="round"\n' +
-            '                                         class="ml-2 feather feather-map">\n' +
-            '                                        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>\n' +
-            '                                        <line x1="8" y1="2" x2="8" y2="18"></line>\n' +
-            '                                        <line x1="16" y1="6" x2="16" y2="22"></line>\n' +
-            '                                    </svg>\n' +
-            '                                    اطلاعات مطب\n' +
-            '                                </div>\n' +
-            '                            </div>\n' +
-            '                            <div class="col-9 light-gray-background text-right pr-2">\n' +
-            '                                <div class="red-on-hover clickable gray-color">\n' +
-            '                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"\n' +
-            '                                         viewBox="0 0 24 24"\n' +
-            '                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"\n' +
-            '                                         stroke-linejoin="round" class=" ml-2 feather feather-calendar">\n' +
-            '                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>\n' +
-            '                                        <line x1="16" y1="2" x2="16" y2="6"></line>\n' +
-            '                                        <line x1="8" y1="2" x2="8" y2="6"></line>\n' +
-            '                                        <line x1="3" y1="10" x2="21" y2="10"></line>\n' +
-            '                                    </svg>\n' +
-            '                                    روز های حضور\n' +
-            '                                </div>\n' +
-            '                            </div>\n' +
-            '                        </div>\n' +
-            '                        <div style="height: 196px; width: 100%" class="">\n' +
-            '                           <div id="matab-content" class="full-size row no-gutters rtl-direction" style="display:none">' +
-            '                               <div class="col-5 center-content text-center pr-3">\n' +
-            '                                    <img style="width: 250px; height: 123px" class="rounded-border-10"\n' +
-            '                                         src="{% static 'darmankade/images/doctor/map.png' %}" alt="">\n' +
-            '                               </div>\n' +
-            '                               <div class="col-7 text-14 text-right pt-3 mb-0">\n' +
-            '                                    <p class="rtl-direction">\n' +
-            '                                    <b>\n' +
-            '                                        آدرس مطب  :\n' +
-            '                                    </b>\n' +
-            '                                   </p>\n' +
-            '                                   <p>\n' +
-            '                                   <span id="address">\n' + address +
-            '\n' +
-            '                                   </span>\n' +
-            '                                   </p>\n' +
-            '                                   <p>\n' +
-            '                                       <b>تلفن گویا:</b>\n' +
-            '                                       <span id="phone">\n' +
-            '                                    \n' + phone +
-            '                                   </span>\n' +
-            '                                   </p>\n' +
-            '                               </div>' +
-            '                           </div>' +
-            '                           <div id="weekdays-content" class="full-size row no-gutters rtl-direction" style="display:flex;">' +
-            '                               <div class="col-5 center-content text-center pr-3">\n' +
-            '                                    <img style="width: 250px; height: 123px" class="rounded-border-10"\n' +
-            '                                         src="{% static 'darmankade/images/doctor/map.png' %}" alt="">\n' +
-            '                               </div>\n' +
-            '                               <div class="col-7 text-14 text-right pt-3 mb-0">\n' +
-            '                                    <p class="rtl-direction">\n' +
-            '                                    <b>\n' +
-            '                                        آدرس مطب  :\n' +
-            '                                    </b>\n' +
-            '                                   </p>\n' +
-            '                                   <p>\n' +
-            '                                   <span id="address">\n' + address +
-            '\n' +
-            '                                   </span>\n' +
-            '                                   </p>\n' +
-            '                                   <p>\n' +
-            '                                       <b>تلفن گویا:</b>\n' +
-            '                                       <span id="phone">\n' +
-            '                                    \n' + phone +
-            '                                   </span>\n' +
-            '                                   </p>\n' +
-            '                               </div>' +
-            '                           </div>\n' +
-            '                        </div>\n' +
-            '                    </div>\n' +
-            '\n' +
-            '                    <div class="patient-comments-detail white-background mb-3 normal-border rounded-border-10"\n' +
-            '                         style="height: 1000px">\n' +
-            '                        <div>\n' +
-            '                            <div style="height: 68px"\n' +
-            '                                 class="pr-2 patient-comment-detail-header rtl-direction text-right light-gray-background">\n' +
-            '                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"\n' +
-            '                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"\n' +
-            '                                     stroke-linejoin="round" class="text-slate feather feather-message-square">\n' +
-            '                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>\n' +
-            '                                </svg>\n' +
-            '                                <span class="text-16 font-weight-bold">نظرات کاربران (تعداد کل نظرات :<span>' + comments + '</span>)</span>\n' +
-            '                                <p class="text-12 gray-color pr-3">\n' +
-            '                                    در این قسمت شما می توانید تجربه مراجعه کاربران دیگر به مطب آقای دکتر مهران جلالی را\n' +
-            '                                    بخوانید.\n' +
-            '                                </p>\n' +
-            '                            </div>\n' +
-            '                            <div style="height: 234px; width: 100%" class="row rtl-direction">\n' +
-            '                                <div class="col-6 text-right">\n' +
-            '                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"\n' +
-            '                                         viewBox="0 0 24 24"\n' +
-            '                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"\n' +
-            '                                         stroke-linejoin="round" class="feather feather-star">\n' +
-            '                                        <polygon\n' +
-            '                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>\n' +
-            '                                    </svg>\n' +
-            '\n' +
-            '                                    امتیاز به پزشک\n' +
-            '                                    <div class="flex-container row-flex gray-color center-content text-18 pt-1">\n' +
-            '                                    <span>\n' +
-            '                                        5 ستاره\n' +
-            '                                    </span>\n' +
-            '                                        <div style="width: 168px; height: 6px;"\n' +
-            '                                             class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">\n' +
-            '                                            <div style="background-color: #1780df; width: 82%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                            <div style="background-color: #dedada; width: 18%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                        </div>\n' +
-            '                                        <span>\n' +
-            '                                        43\n' +
-            '                                    </span>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="flex-container row-flex gray-color center-content text-18 pt-1">\n' +
-            '                                    <span>\n' +
-            '                                        4 ستاره\n' +
-            '                                    </span>\n' +
-            '                                        <div style="width: 168px; height: 6px;"\n' +
-            '                                             class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">\n' +
-            '                                            <div style="background-color: #1780df; width: 12%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                            <div style="background-color: #dedada; width: 88%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                        </div>\n' +
-            '                                        <span>\n' +
-            '                                        6\n' +
-            '                                    </span>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="flex-container row-flex gray-color center-content text-18 pt-1">\n' +
-            '                                    <span>\n' +
-            '                                        3 ستاره\n' +
-            '                                    </span>\n' +
-            '                                        <div style="width: 168px; height: 6px;"\n' +
-            '                                             class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">\n' +
-            '                                            <div style="background-color: #1780df; width: 4%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                            <div style="background-color: #dedada; width: 96%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                        </div>\n' +
-            '                                        <span>\n' +
-            '                                        2\n' +
-            '                                    </span>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="flex-container row-flex gray-color center-content text-18 pt-1">\n' +
-            '                                    <span>\n' +
-            '                                        2 ستاره\n' +
-            '                                    </span>\n' +
-            '                                        <div style="width: 168px; height: 6px;"\n' +
-            '                                             class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">\n' +
-            '                                            <div style="background-color: #1780df; width: 0%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                            <div style="background-color: #dedada; width: 100%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                        </div>\n' +
-            '                                        <span>\n' +
-            '                                        0\n' +
-            '                                    </span>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="flex-container row-flex gray-color center-content text-18 pt-1">\n' +
-            '                                    <span>\n' +
-            '                                        1 ستاره\n' +
-            '                                    </span>\n' +
-            '                                        <div style="width: 168px; height: 6px;"\n' +
-            '                                             class="padding-left-20 padding-right-20 rounded-border-5 rtl-direction flex-container row-flex">\n' +
-            '                                            <div style="background-color: #1780df; width: 2%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                            <div style="background-color: #dedada; width: 98%"\n' +
-            '                                                 class="rounded-border-5 full-height">\n' +
-            '                                            </div>\n' +
-            '                                        </div>\n' +
-            '                                        <span>\n' +
-            '                                        1\n' +
-            '                                    </span>\n' +
-            '                                    </div>\n' +
-            '                                </div>\n' +
-            '\n' +
-            '                                <div class="col-6 text-center">\n' +
-            '                                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"\n' +
-            '                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"\n' +
-            '                                         stroke-linecap="round" stroke-linejoin="round" class="feather feather-watch">\n' +
-            '                                        <circle cx="12" cy="12" r="7"></circle>\n' +
-            '                                        <polyline points="12 9 12 12 13.5 13.5"></polyline>\n' +
-            '                                        <path d="M16.51 17.35l-.35 3.83a2 2 0 0 1-2 1.82H9.83a2 2 0 0 1-2-1.82l-.35-3.83m.01-10.7l.35-3.83A2 2 0 0 1 9.83 1h4.35a2 2 0 0 1 2 1.82l.35 3.83"></path>\n' +
-            '                                    </svg>\n' +
-            '                                    <span class="text-14 font-weight-bold">\n' +
-            '                                        میانگین زمان انتظار برای ویزیت\n' +
-            '                                    </span>\n' +
-            '                                    <p class="text-14">\n' +
-            '                                        45 دقیقه\n' +
-            '                                    </p>\n' +
-            '                                </div>\n' +
-            '                            </div>\n' +
-            '                        </div>\n' +
-            '\n' +
-            '                        <div id="patient-comment-detail-content">\n' +
-            '                            <div id="sorting-part" style="height: 53px; width: 709px"\n' +
-            '                                 class="center-content pr-3 white-background mb-3 normal-border rounded-border-10 horizontal-center rtl-direction text-right">\n' +
-            '                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"\n' +
-            '                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"\n' +
-            '                                     stroke-linejoin="round" class="text-slate feather feather-align-right">\n' +
-            '                                    <line x1="21" y1="10" x2="7" y2="10"></line>\n' +
-            '                                    <line x1="21" y1="6" x2="3" y2="6"></line>\n' +
-            '                                    <line x1="21" y1="14" x2="3" y2="14"></line>\n' +
-            '                                    <line x1="21" y1="18" x2="7" y2="18"></line>\n' +
-            '                                </svg>\n' +
-            '                                <span class="text-14">\n' +
-            '                                مرتب سازی بر اساس:\n' +
-            '                            </span>\n' +
-            '                                <span class="text-14 gray-color pr-4">\n' +
-            '                                جدیدترین\n' +
-            '                            </span>\n' +
-            '                                <span class="text-14 gray-color pr-4 pl-4">\n' +
-            '                                بیشترین امتیاز\n' +
-            '                            </span>\n' +
-            '                                <span class="water-blue-background text-14 white-color rounded-border-10"\n' +
-            '                                      style="padding: 5px">\n' +
-            '                                مفید ترین نظرات\n' +
-            '                            </span>\n' +
-            '\n' +
-            '                            </div>\n' +
-            '                            <div style="height: 285px; width: 709px"\n' +
-            '                                 class="patient-comment-detail-box white-background mb-3 normal-border rounded-border-10 horizontal-center">\n' +
-            '                                <div style="height: 70px"\n' +
-            '                                     class="patient-comment-detail-box-header  text-right no-gutters row rtl-direction center-content light-gray-background">\n' +
-            '                                    <div class="col-6 text-right">\n' +
-            '                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"\n' +
-            '                                             viewBox="0 0 24 24"\n' +
-            '                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"\n' +
-            '                                             stroke-linejoin="round" class="text-slate feather feather-user">\n' +
-            '                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>\n' +
-            '                                            <circle cx="12" cy="7" r="4"></circle>\n' +
-            '                                        </svg>\n' +
-            '                                        <span class="text-12 gray-color pr-2">\n' +
-            '                                        نظر محبوبه در تاریخ 14 مهر 1399\n' +
-            '                                    </span>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-6 text-14 pl-1 text-left" style="color: #4dcc6b">\n' +
-            '                                        <svg data-v-f144f462="" xmlns="http://www.w3.org/2000/svg" width="1.5em"\n' +
-            '                                             height="1.5em" viewBox="0 0 24 24" fill="none" stroke="currentColor"\n' +
-            '                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n' +
-            '                                             class="cursor-pointer mx-auto feather feather-thumbs-up">\n' +
-            '                                            <path\n' +
-            '                                                    data-v-f144f462=""\n' +
-            '                                                    d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>\n' +
-            '                                        </svg>\n' +
-            '                                        <p>\n' +
-            '                                            4\n' +
-            '                                        </p>\n' +
-            '                                    </div>\n' +
-            '                                </div>\n' +
-            '                                <div style="height: 215px" class="patient-comment-detail-box-content row">\n' +
-            '                                    <div class="col-7 pt-3 gray-color">\n' +
-            '                                        <p class="rtl-direction text-right text-14">\n' +
-            '                                        <span>\n' +
-            '                                        ایشون عالی بودن انقدر دلسوزانه بدون پیش داوری ویزیتم کردن و برام دارو تجویز کردن\n' +
-            '                                        که احساس کردم راجبع درد هام دارم با پدرم صحبت میکنم عالین ایشون براشون سلامتی\n' +
-            '                                        ارزو میکنم\n' +
-            '                                        </span>\n' +
-            '                                        </p>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-5 text-right rtl-direction pr-3 pt-3 text-14 font-weight-bold">\n' +
-            '                                        <div class="padding-top-10">\n' +
-            '                                        <span>\n' +
-            '                                            علت مراجعه\n' +
-            '                                        </span>\n' +
-            '                                            <span class="pr-5">\n' +
-            '                                            موارد دیگر\n' +
-            '                                        </span>\n' +
-            '                                        </div>\n' +
-            '                                        <div style="line-height: 48px" class="center-content">\n' +
-            '                                        <span>\n' +
-            '                                            امتیاز به پزشک\n' +
-            '                                        </span>\n' +
-            '                                            <span class="pr-4 blue-color text-38">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                        </span>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                </div>\n' +
-            '\n' +
-            '                            </div>\n' +
-            '\n' +
-            '                            <div id="patient-comment-detail-box" style="height: 285px; width: 709px"\n' +
-            '                                 class="white-background mb-3 normal-border rounded-border-10 horizontal-center">\n' +
-            '                                <div id="patient-comment-detail-box-header " style="height: 70px"\n' +
-            '                                     class="text-right no-gutters row rtl-direction center-content light-gray-background">\n' +
-            '                                    <div class="col-6 text-right">\n' +
-            '                                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"\n' +
-            '                                             viewBox="0 0 24 24"\n' +
-            '                                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"\n' +
-            '                                             stroke-linejoin="round" class="text-slate feather feather-user">\n' +
-            '                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>\n' +
-            '                                            <circle cx="12" cy="7" r="4"></circle>\n' +
-            '                                        </svg>\n' +
-            '                                        <span class="text-12 gray-color pr-2">\n' +
-            '                                    نظر زهرا در تاریخ 11 آبان 1399\n' +
-            '                                </span>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-6 text-14 pl-1 text-left" style="color: #4dcc6b">\n' +
-            '                                        <svg data-v-f144f462="" xmlns="http://www.w3.org/2000/svg" width="1.5em"\n' +
-            '                                             height="1.5em" viewBox="0 0 24 24" fill="none" stroke="currentColor"\n' +
-            '                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"\n' +
-            '                                             class="cursor-pointer mx-auto feather feather-thumbs-up">\n' +
-            '                                            <path\n' +
-            '                                                    data-v-f144f462=""\n' +
-            '                                                    d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>\n' +
-            '                                        </svg>\n' +
-            '                                        <p>\n' +
-            '                                            0\n' +
-            '                                        </p>\n' +
-            '                                    </div>\n' +
-            '                                </div>\n' +
-            '                                <div id="patient-comment-detail-box-content" style="height: 215px" class="row">\n' +
-            '                                    <div class="col-7 pt-3 gray-color">\n' +
-            '                                        <p class="rtl-direction text-right text-14">\n' +
-            '                                            بسیار باحوصله بودو بهگفته های مریض احترام میگذاشت\n' +
-            '\n' +
-            '                                        </p>\n' +
-            '                                    </div>\n' +
-            '                                    <div class="col-5 text-right rtl-direction pr-3 pt-3 text-14 font-weight-bold">\n' +
-            '                                        <div class="padding-top-10">\n' +
-            '                                        <span>\n' +
-            '                                            علت مراجعه\n' +
-            '                                        </span>\n' +
-            '                                            <span class="pr-5">\n' +
-            '                                            سردرد\n' +
-            '                                        </span>\n' +
-            '                                        </div>\n' +
-            '                                        <div style="line-height: 48px" class="center-content">\n' +
-            '                                        <span>\n' +
-            '                                            امتیاز به پزشک\n' +
-            '                                        </span>\n' +
-            '                                            <span class="pr-4 blue-color text-38">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                            <img src="{% static 'darmankade/icons/doctor/star.svg' %}">\n' +
-            '                                        </span>\n' +
-            '                                        </div>\n' +
-            '                                    </div>\n' +
-            '                                </div>\n' +
-            '                            </div>\n' +
-            '                        </div>\n' +
-            '                    </div>\n' +
-            '                </div>\n';
-
-        addElementBeforeEnd('main-left-container', html2append)
-    }
-
-    const fetch_main_right_content_data = async (id) => {
-        let this_url = "https://intense-ravine-40625.herokuapp.com/doctors/" + id;
-        let response = await myfetch(this_url);
-        return response;
+        })
     }
 
 </script>
 
 
 <script>
-    (async () => {
-        id = {{ id }};
-        let response = await fetch_main_right_content_data(id)
-        create_main_right_content(response.name, response.spec, response.avatar, response.number, response.online_pay, response.first_empty_date, response.experience_years)
-        create_main_left_content(response.stars, response.rate, response.commenter, response.comments, response.comment_text, response.address, response.phone, response.week_days)
+</script>
 
-    })()
+
+<script>
 </script>
 
 

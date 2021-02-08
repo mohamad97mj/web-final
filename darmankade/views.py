@@ -11,6 +11,7 @@ from rest_framework.settings import api_settings
 from darmankade.forms import *
 from .dao import load_doctor, load_patient, load_doctors
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
 
 # import darmankade.views.permissions as mypermissions
 # import jwt
@@ -225,26 +226,18 @@ class DoctorsView(APIView):
         context = {
             'doctors': doctors
         }
-        return render(request, 'darmankade/doctors2.html', context)
+        return render(request, 'darmankade/doctors.html', context)
 
 
 class DoctorView(APIView):
     def get(self, request, pk, format=None):
+        doctor = load_doctor(pk)
+
         context = {
-            'id': pk
+            'doctor': doctor,
+            'comments': doctor.comment_set.all()
         }
         return render(request, 'darmankade/doctor.html', context)
-
-    def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('darmankade:doctor_profile', pk=username)
-
-        else:
-            return HttpResponse('Unauthorized', status=401)
 
 
 class PatientProfileView(APIView):
@@ -294,3 +287,20 @@ class RegisterAsView(APIView):
 def logout_view(request):
     logout(request)
     return redirect(reverse('darmankade:index'))
+
+
+@csrf_exempt
+def comment(request):
+    if request.is_ajax and request.method == "POST":
+        # get the nick name from the client side.
+        commenter = request.POST['commenter']
+        reason = request.POST['reason']
+        score = request.POST['score']
+        doctor_username = request.POST['doctor_username']
+        text = request.POST['text']
+        doctor = load_doctor(doctor_username)
+        comment = doctor.comment_set.create(commenter=commenter, reason=reason, score=int(score), text=text)
+        comment.save()
+        return JsonResponse({}, status=200)
+
+    return JsonResponse({}, status=400)

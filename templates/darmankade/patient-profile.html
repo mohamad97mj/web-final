@@ -8,6 +8,11 @@
     <a title="خروج" href="{% url 'darmankade:logout' %}">خروج</a>
 </li>
 
+<li class="">
+    <a title="لیست پزشکان" href="{% url 'darmankade:doctors' %}">لیست پزشکان</a>
+</li>
+
+
 {% with id=id %}
     <form class="myform text-center" style="width: 700px; margin: auto; text-align: right; direction: rtl" method="post"
           action="{% url 'darmankade:patient_profile' id %}">

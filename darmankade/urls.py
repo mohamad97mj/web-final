@@ -26,6 +26,6 @@ urlpatterns = [
 
     path('logout', views.logout_view, name='logout'),
 
-    # path('ajax/get_x', views.get_x, name='get_x'),
+    path('ajax/comment', views.comment, name='comment'),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'html'])
